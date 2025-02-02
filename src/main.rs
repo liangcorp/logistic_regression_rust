@@ -1,4 +1,6 @@
 pub use std::path::Path;
+
+use logistic_regression::sample_run;
 use std::{env, io};
 
 const ARGS_SIZE_LIMIT: usize = 2;

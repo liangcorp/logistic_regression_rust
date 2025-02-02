@@ -19,7 +19,6 @@ use std::io::{Error, ErrorKind};
 /// J = sum(-y .* log(hx') - (1 - y) .* log(1 - hx')) /
 ///         m + (lambda / (2 * m)) * sum(theta_without_first.^2);
 ///
-
 pub fn get_cost(x: &[Vec<f64>], y: &[f64], theta: &[f64]) -> Result<f64, io::Error> {
     let num_feat = theta.len();
     let mut h_x: Vec<f64> = vec![]; // hypothesis - h(x)
