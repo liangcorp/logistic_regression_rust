@@ -6,7 +6,8 @@ pub mod cost_functions;
 pub mod gradient_descent;
 pub mod read_data;
 
-const ITERATIONS: u32 = 5000; // the learning speed
+const ITERATIONS: u32 = 6500; // number of iteration
+const ALPHA: f32 = 0.01;       // the learning speed
 
 // Sample run of linear regression
 pub fn sample_run(input_file_path: &Path) {
@@ -18,11 +19,7 @@ pub fn sample_run(input_file_path: &Path) {
     let mut theta = vec![0.0; x[0].len()]; // set theta 0 and theta 1 to 0.0
 
     // set the learning rate = no of features / 10
-    let alpha = if x[0].len() < 3 {
-        0.01
-    } else {
-        x[0].len() as f32 / 10.0
-    };
+    let alpha = ALPHA;
 
     match gradient_descent::get_thetas(&x, &y, alpha, &mut theta, ITERATIONS) {
         Ok(theta) => {
