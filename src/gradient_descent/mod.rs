@@ -51,7 +51,7 @@ pub fn get_thetas(
         // hx = 1 ./ (1 + exp(-(theta' * X')));
         for (i, x_row) in x_slice.iter().enumerate().take(num_train) {
             sum = 0.0;
-            for j in 1..num_feat {
+            for j in 0..num_feat {
                 sum += theta[j] * x_row[j];
             }
             h_x[i] = 1.0 / (1.0 + std::f32::consts::E.powf(-sum));
