@@ -4,9 +4,9 @@ use std::fs::File;
 use std::io::{self, BufRead, Error, ErrorKind};
 use std::path::Path;
 
-type DoubleVecF64 = Vec<Vec<f32>>;
+type DoubleVecF32 = Vec<Vec<f32>>;
 
-pub fn get_data(path: &Path) -> Result<(DoubleVecF64, Vec<f32>), io::Error> {
+pub fn get_data(path: &Path) -> Result<(DoubleVecF32, Vec<f32>), io::Error> {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
@@ -38,7 +38,7 @@ pub fn get_data(path: &Path) -> Result<(DoubleVecF64, Vec<f32>), io::Error> {
         features_str_vec.push(x_each_line.split(',').collect::<Vec<&str>>());
     }
 
-    let mut x: Vec<Vec<f32>> = vec![];
+    let mut x: DoubleVecF32 = vec![];
 
     for feature_str in features_str_vec.iter() {
         let mut feature_vec_f32: Vec<f32> = vec![1.0];  // x0 is 1.0
