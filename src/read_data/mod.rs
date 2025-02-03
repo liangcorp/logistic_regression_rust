@@ -21,32 +21,32 @@ pub fn get_data(path: &Path) -> Result<(DoubleVecF64, Vec<f32>), io::Error> {
     };
 
     let mut y: Vec<f32> = vec![];
-    let mut v: Vec<String> = vec![];
+    let mut x_lines: Vec<String> = vec![];
 
     // Read the file line by line
-    // split each line by the last ',' into two vectors of v and y
+    // split each line by the last ',' into two vectors of x_lines and y
     for line in lines {
         if let Some(data_tuple) = line.unwrap().rsplit_once(',') {
-            v.push(data_tuple.0.to_string());
+            x_lines.push(data_tuple.0.to_string());
             y.push(data_tuple.1.parse::<f32>().expect("Failed"));
         }
     }
 
-    let mut tmp: Vec<Vec<&str>> = vec![];
+    let mut features_str_vec: Vec<Vec<&str>> = vec![];
 
-    for i in v.iter() {
-        tmp.push(i.split(',').collect::<Vec<&str>>());
+    for x_each_line in x_lines.iter() {
+        features_str_vec.push(x_each_line.split(',').collect::<Vec<&str>>());
     }
 
     let mut x: Vec<Vec<f32>> = vec![];
 
-    for i in tmp.iter() {
-        let mut tmp_f32: Vec<f32> = vec![1.0];
+    for feature_str in features_str_vec.iter() {
+        let mut feature_vec_f32: Vec<f32> = vec![1.0];  // x0 is 1.0
 
-        for j in i.iter().map(|e| e.to_string().parse::<f32>()) {
-            tmp_f32.push(j.unwrap());
+        for feature_f32 in feature_str.iter().map(|e| e.to_string().parse::<f32>()) {
+            feature_vec_f32.push(feature_f32.unwrap());
         }
-        x.push(tmp_f32.to_vec());
+        x.push(feature_vec_f32.to_vec());
     }
 
     Ok((x, y))
